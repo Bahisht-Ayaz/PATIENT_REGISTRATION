@@ -7,14 +7,15 @@ let main_function = {
     },
     register_user:async function (req,res){
        try{
-        let {name,age,gender,phone_no,address} =req.body;
-        let checkPhone = await user.findOne({phone_no:phone_no})
-        if(checkPhone){
-        return res.status(409).json({msg:"Phone no Already exist"})
+        let {name,email,age,gender,phone_no,address} =req.body;
+        let checkEmail = await user.findOne({email:email})
+        if(checkEmail){
+        return res.status(409).json({msg:"Email Already exist"})
         }
         else{
             let patient_data = new user({
                 name,
+                email,
                 age,
                 gender,
                 phone_no,
@@ -29,6 +30,14 @@ let main_function = {
         res.status(501).json({msg: error.message})
        }
   
+    },
+    get_user :async function(req,res){
+        try {
+            let getdata = await user.find().sort({"created_at":-1})
+            return res.status(201).json(getdata)
+        } catch (error) {
+         res.status(501).json({msg: error.message})
+        }
     }
 }
 module.exports = main_function

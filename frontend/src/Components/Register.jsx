@@ -5,12 +5,14 @@ import axios from "axios";
 
 export default function Register() {
     let [name,setName] = useState("")
+    let [email,setEmail] = useState("")
     let [age,setAge] = useState(0)
     let [gender,setGender] = useState("")
     let [contact,setContact] = useState(0)
     let [address,setAddress] = useState("")
 function clear(){
     setName();
+    setEmail();
     setAge();
     setGender();
     setContact();
@@ -19,7 +21,7 @@ function clear(){
 async function register_data (){
     try {
         let username_regex =/^[a-zA-Z0-9._-]{3,16}$/
-        if (!name || age === 0 || !gender || !contact || !address ){
+        if (!name || !email || age === 0 || !gender || !contact || !address ){
             toast.error("All fields are required");
         }
         else if(!username_regex.test(name)){
@@ -28,6 +30,7 @@ async function register_data (){
         else {
             await axios.post("http://localhost:8002/PatientRegister/reg",{
                 name:name,
+                email:email,
                 age:age,
                 gender:gender,
                 phone_no:contact,
@@ -39,7 +42,7 @@ async function register_data (){
         }    
     } catch (error) {
         if(error.status === 409){
-            toast.error("Phone no already exist")
+            toast.error("Email already exist")
         }
         else {
             toast.error(error)
@@ -58,6 +61,13 @@ async function register_data (){
         value={name}
         onChange={(e)=>setName(e.target.value)}/>
 
+        <p>Enter your Email</p>
+        <input type="text" 
+        placeholder='Enter your email'
+        className="form-control my-2" 
+        value={email}
+        onChange={(e)=>setEmail(e.target.value)}/>
+
         <p>Enter your Age</p>
         <input type="number" 
         placeholder='Enter your age'
@@ -67,6 +77,7 @@ async function register_data (){
 
 <p>Select Gender</p>
         <select className="form-control my-3" value={gender} onChange={(e)=>setGender(e.target.value)}>
+            <option value="select">Choose options</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Other">Other</option>

@@ -16,6 +16,7 @@ let datakaam = async function (){
   try{
   user.create({
     name:"Bahisht",
+    email:"bahisht30@gmail.com",
     age:20,
     gender:"female",
     phone_no:"03191398102",

@@ -4,6 +4,12 @@ let patient_collection = mongo.Schema({
      type : String,
      required : true
     },
+    // Email
+    email:{
+        type:String,
+        required:true,
+        unique:true
+    },
     age:{
         type:Number,
         required:true
