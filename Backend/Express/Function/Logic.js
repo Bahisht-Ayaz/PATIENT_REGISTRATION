@@ -33,7 +33,7 @@ let main_function = {
     },
     get_user :async function(req,res){
         try {
-            let getdata = await user.find().sort({"created_at":-1})
+            let getdata = await user.find()
             return res.status(201).json(getdata)
         } catch (error) {
          res.status(501).json({msg: error.message})
